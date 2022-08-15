@@ -1,7 +1,11 @@
 const express = require("express");
 import {Request, Response} from "express";
+const connectDB = require("./config/db");
 
 const app = express();
+
+// Connect Database
+connectDB();
 
 const port = (process.env.PORT || 5000) as number;
 
