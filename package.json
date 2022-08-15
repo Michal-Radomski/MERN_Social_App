@@ -1,0 +1,38 @@
+{
+  "name": "16-mern_social_app",
+  "version": "1.0.0",
+  "description": "Files created during the Udemy.com course: <https://www.udemy.com/course/mern-stack-front-to-back>",
+  "main": "index.ts",
+  "scripts": {
+    "start": "ts-node server.ts",
+    "server": "nodemon server.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Michal-Radomski/MERN_Social_App.git"
+  },
+  "keywords": [],
+  "author": "MichRad",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "config": "^3.3.7",
+    "express": "^4.18.1",
+    "express-validator": "^6.14.2",
+    "gravatar": "^1.8.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.13.14",
+    "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/config": "^3.3.0",
+    "@types/express": "^4.17.13",
+    "@types/gravatar": "^1.8.3",
+    "@types/jsonwebtoken": "^8.5.8",
+    "@types/nodemon": "^1.19.2",
+    "@types/request": "^2.48.8",
+    "concurrently": "^7.3.0",
+    "nodemon": "^2.0.19"
+  }
+}
