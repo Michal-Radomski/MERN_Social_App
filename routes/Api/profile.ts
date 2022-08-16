@@ -4,6 +4,7 @@ import {Response} from "express";
 const {check, validationResult} = require("express-validator");
 
 const Profile = require("../../models/Profile");
+const User = require("../../models/User");
 const auth = require("../../middleware/auth");
 import {CustomRequest} from "../../Interfaces";
 
@@ -157,6 +158,24 @@ router.get("/user/:user_id", async (req: CustomRequest, res: Response) => {
       return res.status(400).json({msg: "Bad ObjectId of the profile"});
     }
     return res.status(500).json({msg: "Server error"});
+  }
+});
+
+// @route    DELETE api/profile
+// @desc     Delete profile, user & posts of the current user
+// @access   Private
+router.delete("/", auth, async (req: CustomRequest, res: Response) => {
+  try {
+    // Remove profile
+    await Profile.findOneAndRemove({user: req.user.id});
+    // Remove user
+    await User.findOneAndRemove({_id: req.user.id});
+    //Todo: remove user's posts
+
+    res.json({msg: "User deleted"});
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
   }
 });
 
