@@ -4,8 +4,8 @@
   "description": "Files created during the Udemy.com course: <https://www.udemy.com/course/mern-stack-front-to-back>",
   "main": "index.ts",
   "scripts": {
-    "start": "ts-node server.ts",
-    "server": "nodemon server.ts"
+    "start": "clear && ts-node server.ts",
+    "server": "clear && nodemon server.ts"
   },
   "repository": {
     "type": "git",
