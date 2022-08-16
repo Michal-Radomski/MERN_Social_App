@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-import c from "config";
+
 import {Request, Response} from "express";
 const {check, validationResult} = require("express-validator");
 const gravatar = require("gravatar");
@@ -9,7 +9,11 @@ const jwt = require("jsonwebtoken");
 // const normalize = require("normalize-url");
 
 const User = require("../../models/User");
+const config = require("config");
+const jwtSecret = config.get("jwtSecret");
+// console.log({jwtSecret});
 
+//- For testing only
 // // @route    GET api/users
 // // @desc     Test route
 // // @access   Public
@@ -17,6 +21,7 @@ const User = require("../../models/User");
 //   res.send("User route - test route");
 // });
 
+//- user route
 // @route    POST api/users
 // @desc     Register user
 // @access   Public
@@ -44,7 +49,6 @@ router.post(
       }
 
       //* Get user gravatar
-
       const avatar = gravatar.url(email, {
           size: "200", // size
           rating: "pg", // rating
@@ -58,26 +62,30 @@ router.post(
         });
 
       //* Encrypt password
-
       const salt = await bcrypt.genSalt(10);
-      console.log({password});
-      console.log({salt});
+      // console.log({password});
+      // console.log({salt});
 
       user.password = await bcrypt.hash(password, salt);
-
-      console.log(" - encrypted:", user.password);
-
+      // console.log("user.password - encrypted:", user.password);
       await user.save();
 
+      //* Return jsonwebtoken
       const payload = {
         user: {
-          id: user.id,
+          id: user._id,
         },
       };
+      // console.log({payload});
 
-      //* Return jsonwebtoken
-
-      res.send("User registered");
+      jwt.sign(payload, jwtSecret, {expiresIn: 36000}, (err: string, token: string) => {
+        if (err) {
+          throw err;
+        }
+        // console.log({token});
+        res.json({token: token});
+      });
+      // res.send("User registered");
     } catch (err) {
       console.error(err.message);
       res.status(500).send("Server error");
