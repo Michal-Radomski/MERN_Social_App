@@ -38,4 +38,68 @@ router.post("/", auth, check("text", "Text is required").notEmpty(), async (req:
   }
 });
 
+// @route    GET api/posts
+// @desc     Get all posts
+// @access   Private
+router.get("/", auth, async (_req: Request, res: Response) => {
+  try {
+    const posts = await Post.find().sort({date: -1}); // From most recent
+    res.json(posts);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+// @route    GET api/posts/:id
+// @desc     Get post by ID
+// @access   Private
+router.get("/:id", auth, async (req: CustomRequest, res: Response) => {
+  try {
+    const post = await Post.findById(req.params.id);
+
+    if (!post) {
+      return res.status(404).json({msg: "Post not found"});
+    }
+
+    res.json(post);
+  } catch (err) {
+    console.error(err.message);
+    if (err.kind === "ObjectId") {
+      return res.status(404).json({msg: "Post not found - bad ObjectId"});
+    }
+
+    res.status(500).send("Server Error");
+  }
+});
+
+// @route    DELETE api/posts/:id
+// @desc     Delete a post
+// @access   Private
+router.delete("/:id", auth, async (req: CustomRequest, res: Response) => {
+  try {
+    const post = await Post.findById(req.params.id);
+
+    if (!post) {
+      return res.status(404).json({msg: "Post not found"});
+    }
+
+    // Check if user owns the post
+    if (post.user.toString() !== req.user.id) {
+      return res.status(401).json({msg: "User not authorized"});
+    }
+
+    await post.remove();
+
+    res.json({msg: "Post removed"});
+  } catch (err) {
+    console.error(err.message);
+    if (err.kind === "ObjectId") {
+      return res.status(404).json({msg: "Post not found - bad ObjectId"});
+    }
+
+    res.status(500).send("Server Error");
+  }
+});
+
 module.exports = router;
