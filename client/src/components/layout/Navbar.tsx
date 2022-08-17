@@ -1,7 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = (): JSX.Element => {
   return (
     <React.Fragment>
       <nav className="navbar bg-dark">

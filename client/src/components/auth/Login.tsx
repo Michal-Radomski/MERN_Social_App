@@ -1,6 +1,6 @@
 import React from "react";
 
-const Login = () => {
+const Login = (): JSX.Element => {
   return (
     <React.Fragment>
       <div>Login</div>;

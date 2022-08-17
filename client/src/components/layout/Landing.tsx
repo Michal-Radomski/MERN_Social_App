@@ -1,7 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
 
-const Landing = () => {
+const Landing = (): JSX.Element => {
   return (
     <React.Fragment>
       <section className="landing">

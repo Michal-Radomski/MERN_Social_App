@@ -1,6 +1,6 @@
 import React from "react";
 
-const Register = () => {
+const Register = (): JSX.Element => {
   return (
     <React.Fragment>
       <div>Register</div>
