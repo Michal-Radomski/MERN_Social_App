@@ -5,7 +5,9 @@
   "main": "index.ts",
   "scripts": {
     "start": "clear && ts-node server.ts",
-    "server": "clear && nodemon server.ts"
+    "server": "clear && nodemon server.ts",
+    "client": "BROWSER=NONE npm start --prefix client",
+    "dev": "clear && concurrently \"npm run server\" \"npm run client\""
   },
   "repository": {
     "type": "git",
@@ -22,8 +24,7 @@
     "express-validator": "^6.14.2",
     "gravatar": "^1.8.2",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.13.14",
-    "request": "^2.88.2"
+    "mongoose": "^5.13.14"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
@@ -32,7 +33,6 @@
     "@types/gravatar": "^1.8.3",
     "@types/jsonwebtoken": "^8.5.8",
     "@types/nodemon": "^1.19.2",
-    "@types/request": "^2.48.8",
     "concurrently": "^7.3.0",
     "nodemon": "^2.0.19"
   }

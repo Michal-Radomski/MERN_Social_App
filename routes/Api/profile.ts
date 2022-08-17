@@ -3,7 +3,7 @@ const router = express.Router();
 import {Response} from "express";
 const {check, validationResult} = require("express-validator");
 const config = require("config");
-// const request = require("request");  //* -> Deprecated
+// const request = require("request");  //* -> Deprecated - was removed
 import axios from "axios";
 
 const Profile = require("../../models/Profile");
@@ -286,7 +286,7 @@ router.delete("/education/:edu_id", auth, async (req: CustomRequest, res: Respon
   }
 });
 
-//* Request Package - Deprecated
+//* Request Package - Deprecated - was removed
 // @route    GET api/profile/github/:username
 // @desc     Get user repos from Github
 // @access   Public
