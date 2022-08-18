@@ -1,29 +1,73 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import {connect} from "react-redux";
+import PropTypes from "prop-types";
 
-const Navbar = (): JSX.Element => {
+import {logout} from "../../redux/actions/auth";
+
+const Navbar = ({
+  auth: {isAuthenticated, loading},
+  logout,
+}: {
+  auth: {isAuthenticated: boolean | null; loading: boolean};
+  logout: () => void;
+}): JSX.Element => {
+  const authLinks = (
+    <ul>
+      <li>
+        <Link to="/profiles">Developers</Link>
+      </li>
+      {/* <li>
+        <Link to="/posts">Posts</Link>
+      </li> */}
+      <li>
+        <Link to="/dashboard">
+          <i className="fas fa-user" /> <span className="hide-sm">Dashboard</span>
+        </Link>
+      </li>
+      <li>
+        <a onClick={logout} href="#!">
+          <i className="fas fa-sign-out-alt" /> <span className="hide-sm">Logout</span>
+        </a>
+      </li>
+    </ul>
+  );
+
+  const guestLinks = (
+    <ul>
+      <li>
+        <Link to="/profiles">Developers</Link>
+      </li>
+      <li>
+        <Link to="/register">Register</Link>
+      </li>
+      <li>
+        <Link to="/login">Login</Link>
+      </li>
+    </ul>
+  );
+
   return (
     <React.Fragment>
       <nav className="navbar bg-dark">
         <h1>
           <Link to="/">
-            <i className="fas fa-code"></i> DevConnector
+            <i className="fas fa-code" /> DevConnector
           </Link>
         </h1>
-        <ul>
-          <li>
-            <Link to="/profiles">Developers</Link>
-          </li>
-          <li>
-            <a href="/register">Register</a>
-          </li>
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
-        </ul>
+        {!loading && <React.Fragment>{isAuthenticated ? authLinks : guestLinks}</React.Fragment>}
       </nav>
     </React.Fragment>
   );
 };
 
-export default Navbar;
+Navbar.propTypes = {
+  logout: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state: State) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, {logout})(Navbar as React.FC<any>);
