@@ -5,8 +5,12 @@ import PropTypes from "prop-types";
 // import axios from "axios"; //* Action moved to Redux
 
 import {setAlert} from "../../redux/actions/alert";
+import {register} from "../../redux/actions/auth";
 
-const Register = (props: {setAlert: (msg: string, alertType: string, timeout?: number) => void}): JSX.Element => {
+const Register = (props: {
+  setAlert: (msg: string, alertType: string, timeout?: number) => void;
+  register: ({name, email, password}: {name: string | undefined; email: string; password: string}) => void;
+}): JSX.Element => {
   const [formData, setFormData] = React.useState<User>({
     name: "",
     email: "",
@@ -53,7 +57,8 @@ const Register = (props: {setAlert: (msg: string, alertType: string, timeout?: n
       // console.log("Passwords do not match", "danger");
       props.setAlert("Passwords do not match", "danger");
     } else {
-      console.log(formData);
+      // console.log(formData);
+      props.register({name, email, password});
     }
   };
 
@@ -66,10 +71,25 @@ const Register = (props: {setAlert: (msg: string, alertType: string, timeout?: n
         </p>
         <form className="form" onSubmit={onSubmit}>
           <div className="form-group">
-            <input type="text" placeholder="Name" name="name" value={name} onChange={onChange} />
+            <input
+              type="text"
+              placeholder="Name"
+              name="name"
+              value={name}
+              onChange={onChange}
+              minLength={3}
+              // required={true}
+            />
           </div>
           <div className="form-group">
-            <input type="email" placeholder="Email Address" name="email" value={email} onChange={onChange} />
+            <input
+              type="email"
+              placeholder="Email Address"
+              name="email"
+              value={email}
+              onChange={onChange}
+              //  required={true}
+            />
             <small className="form-text">This site uses Gravatar so if you want a profile image, use a Gravatar email</small>
           </div>
           <div className="form-group">
@@ -104,6 +124,7 @@ const Register = (props: {setAlert: (msg: string, alertType: string, timeout?: n
 
 Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired,
 };
 
-export default connect(null, {setAlert})(Register);
+export default connect(null, {setAlert, register})(Register);

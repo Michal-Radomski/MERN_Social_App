@@ -577,8 +577,10 @@ button {
 }
 
 .alert-wrapper {
+  width: calc(100% - 4rem);
   position: fixed;
   top: 4rem;
   right: 2rem;
+  left: 2rem;
   display: inline-block;
 }
