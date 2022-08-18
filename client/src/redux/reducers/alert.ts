@@ -4,6 +4,8 @@ const initialState: State = [];
 
 function alertReducer(state = initialState, action: Dispatch) {
   console.log({action});
+  console.log("action.payload:", action.payload);
+  console.log("action.type:", action.type);
 
   switch (action.type) {
     case SET_ALERT:

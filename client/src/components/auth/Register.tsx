@@ -1,8 +1,13 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import {connect} from "react-redux";
 // import axios from "axios"; //* Action moved to Redux
 
-const Register = (): JSX.Element => {
+import {setAlert} from "../../redux/actions/alert";
+
+const Register = (props: any): JSX.Element => {
+  console.log(props.setAlert);
+
   const [formData, setFormData] = React.useState<User>({
     name: "",
     email: "",
@@ -97,4 +102,4 @@ const Register = (): JSX.Element => {
   );
 };
 
-export default Register;
+export default connect(null, {setAlert})(Register);
