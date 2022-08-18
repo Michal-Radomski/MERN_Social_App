@@ -16,3 +16,9 @@ interface CustomError extends Error {
     data: string;
   };
 }
+
+interface Alert {
+  alertType: string;
+  id: string;
+  msg: string;
+}

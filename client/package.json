@@ -19,7 +19,7 @@
     "redux-thunk": "^2.4.1",
     "sass": "^1.54.4",
     "typescript": "^4.7.4",
-    "uuidv4": "^6.2.13"
+    "uuid": "^8.3.2"
   },
   "scripts": {
     "start": "BROWSER=NONE react-scripts start",
@@ -47,6 +47,7 @@
   },
   "proxy": "http://localhost:5000",
   "devDependencies": {
-    "@types/react-router-dom": "^5.3.3"
+    "@types/react-router-dom": "^5.3.3",
+    "@types/uuid": "^8.3.4"
   }
 }

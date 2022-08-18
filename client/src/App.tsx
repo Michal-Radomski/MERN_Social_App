@@ -8,6 +8,7 @@ import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import Landing from "./components/layout/Landing";
 import Navbar from "./components/layout/Navbar";
+import Alert from "./components/layout/Alert";
 
 const NotFound = (): JSX.Element => <h1 style={{textAlign: "center", marginTop: "80px"}}>Page Not Found</h1>;
 
@@ -19,6 +20,7 @@ const App = (): JSX.Element => {
           <Navbar />
           <Route exact={true} path="/" component={Landing} />
           <section className="container">
+            <Alert alerts={[]} />
             <Switch>
               <Route exact={true} path="/register" component={Register} />
               <Route exact={true} path="/login" component={Login} />

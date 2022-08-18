@@ -1,4 +1,4 @@
-import {uuid as uuidv4} from "uuidv4";
+import {v4 as uuidv4} from "uuid";
 
 import {SET_ALERT, REMOVE_ALERT} from "../types";
 
@@ -6,7 +6,7 @@ export const setAlert =
   (msg: string, alertType: string, timeout = 5000) =>
   (dispatch: Dispatch) => {
     const id = uuidv4();
-    console.log({id});
+    // console.log({id});
     dispatch({
       type: SET_ALERT,
       payload: {msg, alertType, id},

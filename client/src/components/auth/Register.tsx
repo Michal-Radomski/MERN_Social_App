@@ -1,13 +1,12 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
+import PropTypes from "prop-types";
 // import axios from "axios"; //* Action moved to Redux
 
 import {setAlert} from "../../redux/actions/alert";
 
-const Register = (props: any): JSX.Element => {
-  console.log(props.setAlert);
-
+const Register = (props: {setAlert: (msg: string, alertType: string, timeout?: number) => void}): JSX.Element => {
   const [formData, setFormData] = React.useState<User>({
     name: "",
     email: "",
@@ -51,7 +50,8 @@ const Register = (props: any): JSX.Element => {
   const onSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault();
     if (password !== password2) {
-      console.log("Passwords do not match", "danger");
+      // console.log("Passwords do not match", "danger");
+      props.setAlert("Passwords do not match", "danger");
     } else {
       console.log(formData);
     }
@@ -100,6 +100,10 @@ const Register = (props: any): JSX.Element => {
       </section>
     </React.Fragment>
   );
+};
+
+Register.propTypes = {
+  setAlert: PropTypes.func.isRequired,
 };
 
 export default connect(null, {setAlert})(Register);
