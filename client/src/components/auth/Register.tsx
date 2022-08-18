@@ -1,5 +1,5 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 // import axios from "axios"; //* Action moved to Redux
@@ -10,6 +10,7 @@ import {register} from "../../redux/actions/auth";
 const Register = (props: {
   setAlert: (msg: string, alertType: string, timeout?: number) => void;
   register: ({name, email, password}: {name: string | undefined; email: string; password: string}) => void;
+  isAuthenticated: boolean | null;
 }): JSX.Element => {
   const [formData, setFormData] = React.useState<User>({
     name: "",
@@ -61,6 +62,11 @@ const Register = (props: {
       props.register({name, email, password});
     }
   };
+
+  // Redirect if Registered
+  if (props.isAuthenticated) {
+    return <Redirect to="/dashboard" />;
+  }
 
   return (
     <React.Fragment>
@@ -125,6 +131,11 @@ const Register = (props: {
 Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
   register: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
 };
 
-export default connect(null, {setAlert, register})(Register);
+const mapStateToProps = (state: State) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, {setAlert, register})(Register);
