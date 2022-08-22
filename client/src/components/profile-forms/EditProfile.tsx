@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {Link, withRouter} from "react-router-dom";
 import {History} from "history";
 
-import {createProfile} from "../../redux/actions/profile";
+import {createProfile, getCurrentProfile} from "../../redux/actions/profile";
 
 const initialState: State = {
   company: "",
@@ -21,11 +21,15 @@ const initialState: State = {
   instagram: "",
 };
 
-const CreateProfile = ({
+const EditProfile = ({
+  profile: {profile, loading},
   createProfile,
+  getCurrentProfile,
   history,
 }: {
+  profile: State;
   createProfile: (arg0: FormData, arg1: History, arg2: boolean) => void;
+  getCurrentProfile: () => void;
   history: History;
 }): JSX.Element => {
   const [formData, setFormData] = React.useState<State>(initialState);
@@ -35,19 +39,41 @@ const CreateProfile = ({
   const {company, website, location, status, skills, githubusername, bio, twitter, facebook, linkedin, youtube, instagram} =
     formData;
 
+  React.useEffect(() => {
+    // If there is no profile, attempt to fetch one
+    if (!profile) getCurrentProfile();
+
+    // If we finished loading and we do have a profile then build our profileData
+    if (!loading && profile) {
+      // console.log({profile});
+      const profileData = {...initialState};
+      // console.log({profileData});
+      for (const key in profile) {
+        if (key in profileData) profileData[key] = profile[key];
+      }
+      for (const key in profile.social) {
+        if (key in profileData) profileData[key] = profile.social[key];
+      }
+      // The skills may be an array from our API response
+      if (Array.isArray(profileData.skills)) profileData.skills = profileData.skills.join(", ");
+      // Set local state with the profileData
+      setFormData(profileData);
+    }
+  }, [loading, getCurrentProfile, profile]);
+
   const onChange = (event: {target: {name: string; value: string}}) =>
     setFormData({...formData, [event.target.name]: event.target.value});
 
   const onSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault();
-    createProfile(formData, history, false);
+    createProfile(formData, history, true);
   };
 
   return (
     <React.Fragment>
-      <h1 className="large text-primary">Create Your Profil</h1>
+      <h1 className="large text-primary">Edit Your Profile</h1>
       <p className="lead">
-        <i className="fas fa-user" /> Let's get some information to make your Profile
+        <i className="fas fa-user" /> Add some changes to your profile
       </p>
       <small>* = required field</small>
 
@@ -142,8 +168,12 @@ const CreateProfile = ({
   );
 };
 
-CreateProfile.propTypes = {
+EditProfile.propTypes = {
   createProfile: PropTypes.func.isRequired,
 };
 
-export default connect(null, {createProfile})(withRouter(CreateProfile as React.FC<any>));
+const mapStateToProps = (state: State) => ({
+  profile: state.profile,
+});
+
+export default connect(mapStateToProps, {createProfile, getCurrentProfile})(withRouter(EditProfile as React.FC<any>));
