@@ -13,6 +13,7 @@ import setAuthToken from "./utils/setAuthToken";
 import {loadUser} from "./redux/actions/auth";
 import Dashboard from "./components/dashboard/Dashboard";
 import PrivateRoute from "./components/routing/PrivateRoute";
+import CreateProfile from "./components/profile-forms/CreateProfile";
 
 const NotFound = (): JSX.Element => <h1 style={{textAlign: "center", marginTop: "80px"}}>Page Not Found</h1>;
 
@@ -40,6 +41,7 @@ const App = (): JSX.Element => {
               <Route exact={true} path="/register" component={Register} />
               <Route exact={true} path="/login" component={Login} />
               <PrivateRoute exact={true} path="/dashboard" component={Dashboard} />
+              <PrivateRoute exact={true} path="/create-profile" component={CreateProfile} />
               <Route path="*" component={NotFound} />
             </Switch>
           </section>
