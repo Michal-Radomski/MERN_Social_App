@@ -1,7 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {Connect} from "react-redux";
-import {Link} from "react-router-dom";
+import {connect} from "react-redux";
+import {Link, withRouter} from "react-router-dom";
+import {History} from "history";
+
+import {createProfile} from "../../redux/actions/profile";
 
 const initialState: State = {
   company: "",
@@ -18,7 +21,13 @@ const initialState: State = {
   instagram: "",
 };
 
-const CreateProfile = (props: State) => {
+const CreateProfile = ({
+  createProfile,
+  history,
+}: {
+  createProfile: (arg0: FormData, arg1: History, arg2?: boolean) => void;
+  history: History;
+}) => {
   const [formData, setFormData] = React.useState<State>(initialState);
   // console.log({formData});
   const [displaySocialInputs, toggleSocialInputs] = React.useState<boolean>(false);
@@ -31,7 +40,7 @@ const CreateProfile = (props: State) => {
 
   const onSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault();
-    // createProfile(formData, navigate, profile ? true : false);
+    createProfile(formData, history);
   };
 
   return (
@@ -140,6 +149,8 @@ const CreateProfile = (props: State) => {
   );
 };
 
-CreateProfile.propTypes = {};
+CreateProfile.propTypes = {
+  createProfile: PropTypes.func.isRequired,
+};
 
-export default CreateProfile;
+export default connect(null, {createProfile})(withRouter(CreateProfile as React.FC<any>));
