@@ -1,13 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
+import {Link} from "react-router-dom";
 
 import {getCurrentProfile} from "../../redux/actions/profile";
+import Spinner from "../layout/Spinner";
 
 const Dashboard = ({
   getCurrentProfile,
-  auth,
-  profile,
+  auth: {user},
+  profile: {profile, loading},
 }: {
   getCurrentProfile: () => void;
   auth: State;
@@ -20,9 +22,25 @@ const Dashboard = ({
     getCurrentProfile();
   }, [getCurrentProfile]);
 
-  return (
+  return loading && profile === null ? (
+    <Spinner />
+  ) : (
     <React.Fragment>
-      <div>Dashboard</div>
+      <h1 className="large text-primary">Dashboard</h1>
+      <p className="lead">
+        <i className="fas fa-user" /> Welcome {user && user.name}
+      </p>
+
+      {profile !== null ? (
+        <React.Fragment>has a profile</React.Fragment>
+      ) : (
+        <React.Fragment>
+          <p>You have not yet setup a profile, please add some info</p>
+          <Link to="/create-profile" className="btn btn-primary my-1">
+            Create Profile
+          </Link>
+        </React.Fragment>
+      )}
     </React.Fragment>
   );
 };

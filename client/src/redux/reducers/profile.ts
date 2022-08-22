@@ -1,4 +1,4 @@
-import {GET_PROFILE, PROFILE_ERROR} from "../types";
+import {CLEAR_PROFILE, GET_PROFILE, PROFILE_ERROR} from "../types";
 
 const initialState: State = {
   profile: null,
@@ -26,6 +26,14 @@ const profileReducer = (state = initialState, action: Dispatch) => {
         loading: false,
         profile: null,
       };
+    case CLEAR_PROFILE:
+      return {
+        ...state,
+        profile: null,
+        repos: [],
+        loading: false,
+      };
+
     default:
       return state;
   }

@@ -1,7 +1,13 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
+import {connect} from "react-redux";
+import PropTypes from "prop-types";
 
-const Landing = (): JSX.Element => {
+const Landing = ({isAuthenticated}: {isAuthenticated: boolean}): JSX.Element => {
+  if (isAuthenticated) {
+    return <Redirect to="/dashboard" />;
+  }
+
   return (
     <React.Fragment>
       <section className="landing">
@@ -24,4 +30,12 @@ const Landing = (): JSX.Element => {
   );
 };
 
-export default Landing;
+Landing.propTypes = {
+  isAuthenticated: PropTypes.bool,
+};
+
+const mapStateToProps = (state: State) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, null)(Landing as React.FC<{isAuthenticated: boolean}>);
