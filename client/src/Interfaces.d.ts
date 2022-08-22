@@ -13,6 +13,8 @@ interface User {
 
 interface CustomError extends Error {
   response: {
+    status: string;
+    statusText: string;
     data: {
       errors: {
         forEach(arg0: (error: {msg: string}) => string);
