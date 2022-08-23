@@ -2,7 +2,16 @@ import axios from "axios";
 import {History} from "history";
 
 import {setAlert} from "./alert";
-import {ACCOUNT_DELETED, CLEAR_PROFILE, GET_PROFILE, PROFILE_ERROR, UPDATE_PROFILE} from "../types";
+import {
+  ACCOUNT_DELETED,
+  CLEAR_PROFILE,
+  GET_PROFILE,
+  GET_PROFILES,
+  GET_REPOS,
+  NO_REPOS,
+  PROFILE_ERROR,
+  UPDATE_PROFILE,
+} from "../types";
 
 //* Default headers in axios are already included: Content-Type: application/json; Also axios stringifies and parses JSON !!!
 
@@ -11,12 +20,13 @@ export const getCurrentProfile = () => async (dispatch: Dispatch) => {
   try {
     const res = await axios.get("/api/profile/me");
 
-    dispatch({
+    await dispatch({
       type: GET_PROFILE,
       payload: res.data,
     });
   } catch (err) {
-    dispatch({
+    await dispatch({type: CLEAR_PROFILE});
+    await dispatch({
       type: PROFILE_ERROR,
       payload: {msg: (err as CustomError).response.statusText, status: (err as CustomError).response.status},
     });
@@ -154,5 +164,57 @@ export const deleteAccount = () => async (dispatch: Dispatch) => {
         payload: {msg: (err as CustomError).response.statusText, status: (err as CustomError).response.status},
       });
     }
+  }
+};
+
+// Get all profiles
+export const getProfiles = () => async (dispatch: Dispatch) => {
+  dispatch({type: CLEAR_PROFILE});
+
+  try {
+    const res = await axios.get("/api/profile");
+
+    dispatch({
+      type: GET_PROFILES,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: {msg: (err as CustomError).response.statusText, status: (err as CustomError).response.status},
+    });
+  }
+};
+
+// Get profile by ID
+export const getProfileById = (userId: string) => async (dispatch: Dispatch) => {
+  try {
+    const res = await axios.get(`/api/profile/user/${userId}`);
+
+    dispatch({
+      type: GET_PROFILE,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: {msg: (err as CustomError).response.statusText, status: (err as CustomError).response.status},
+    });
+  }
+};
+
+// Get Github repos
+export const getGithubRepos = (username: string) => async (dispatch: Dispatch) => {
+  try {
+    const res = await axios.get(`/api/profile/github/${username}`);
+
+    dispatch({
+      type: GET_REPOS,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: NO_REPOS,
+    });
   }
 };
