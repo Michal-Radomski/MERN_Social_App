@@ -2,7 +2,7 @@ import axios from "axios";
 import {History} from "history";
 
 import {setAlert} from "./alert";
-import {GET_PROFILE, PROFILE_ERROR, UPDATE_PROFILE} from "../types";
+import {ACCOUNT_DELETED, CLEAR_PROFILE, GET_PROFILE, PROFILE_ERROR, UPDATE_PROFILE} from "../types";
 
 //* Default headers in axios are already included: Content-Type: application/json; Also axios stringifies and parses JSON !!!
 
@@ -97,5 +97,62 @@ export const addEducation = (formData: FormData, history: History) => async (dis
       type: PROFILE_ERROR,
       payload: {msg: (err as CustomError).response.statusText, status: (err as CustomError).response.status},
     });
+  }
+};
+
+// Delete experience
+export const deleteExperience = (id: string) => async (dispatch: Dispatch) => {
+  try {
+    const res = await axios.delete(`/api/profile/experience/${id}`);
+
+    dispatch({
+      type: UPDATE_PROFILE,
+      payload: res.data,
+    });
+
+    dispatch(setAlert("Experience Removed", "success"));
+  } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: {msg: (err as CustomError).response.statusText, status: (err as CustomError).response.status},
+    });
+  }
+};
+
+// Delete education
+export const deleteEducation = (id: string) => async (dispatch: Dispatch) => {
+  try {
+    const res = await axios.delete(`/api/profile/education/${id}`);
+
+    dispatch({
+      type: UPDATE_PROFILE,
+      payload: res.data,
+    });
+
+    dispatch(setAlert("Education Removed", "success"));
+  } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: {msg: (err as CustomError).response.statusText, status: (err as CustomError).response.status},
+    });
+  }
+};
+
+// Delete account & profile
+export const deleteAccount = () => async (dispatch: Dispatch) => {
+  if (window.confirm("Are you sure? This can NOT be undone!")) {
+    try {
+      await axios.delete("/api/profile");
+
+      dispatch({type: CLEAR_PROFILE});
+      dispatch({type: ACCOUNT_DELETED});
+
+      dispatch(setAlert("Your account has been permanently deleted", "danger"));
+    } catch (err) {
+      dispatch({
+        type: PROFILE_ERROR,
+        payload: {msg: (err as CustomError).response.statusText, status: (err as CustomError).response.status},
+      });
+    }
   }
 };

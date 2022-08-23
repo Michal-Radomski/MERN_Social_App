@@ -10,6 +10,7 @@ const Profile = require("../../models/Profile");
 const User = require("../../models/User");
 const auth = require("../../middleware/auth");
 import {CustomRequest} from "../../Interfaces";
+const Post = require("../../models/Post");
 
 // @route    GET api/profile/me
 // @desc     Get current user's profile
@@ -170,11 +171,12 @@ router.get("/user/:user_id", async (req: CustomRequest, res: Response) => {
 // @access   Private
 router.delete("/", auth, async (req: CustomRequest, res: Response) => {
   try {
+    // Remove user's posts
+    await Post.deleteMany({user: req.user.id});
     // Remove profile
     await Profile.findOneAndRemove({user: req.user.id});
     // Remove user
     await User.findOneAndRemove({_id: req.user.id});
-    //Todo: remove user's posts
 
     res.json({msg: "User deleted"});
   } catch (err) {

@@ -1,10 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Moment from "react-moment";
+import {connect} from "react-redux";
 
-// import { deleteExperience } from '../../redux/actions/profile';
+import {deleteExperience} from "../../redux/actions/profile";
 
-const Experience = ({experience}: {experience: Experience[]}): JSX.Element => {
+const Experience = ({
+  experience,
+  deleteExperience,
+}: {
+  experience: Experience[];
+  deleteExperience: (arg0: string) => void;
+}): JSX.Element => {
   const experiences = experience.map((exp: Experience) => (
     <tr key={exp._id}>
       <td>{exp.company}</td>
@@ -14,10 +21,7 @@ const Experience = ({experience}: {experience: Experience[]}): JSX.Element => {
         {exp.to === null ? "Now" : <Moment format="YYYY/MM/DD">{exp.to}</Moment>}
       </td>
       <td>
-        <button
-          // onClick={() => deleteExperience(exp._id)}
-          className="btn btn-danger"
-        >
+        <button onClick={() => deleteExperience(exp._id)} className="btn btn-danger">
           Delete
         </button>
       </td>
@@ -44,7 +48,7 @@ const Experience = ({experience}: {experience: Experience[]}): JSX.Element => {
 
 Experience.propTypes = {
   experience: PropTypes.array.isRequired,
-  // deleteExperience: PropTypes.func.isRequired,
+  deleteExperience: PropTypes.func.isRequired,
 };
 
-export default Experience;
+export default connect(null, {deleteExperience})(Experience);

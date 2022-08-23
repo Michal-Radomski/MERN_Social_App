@@ -1,10 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Moment from "react-moment";
+import {connect} from "react-redux";
 
-// import { deleteEducation } from '../../redux/actions/profile';
+import {deleteEducation} from "../../redux/actions/profile";
 
-const Education = ({education}: {education: Education[]}): JSX.Element => {
+const Education = ({
+  education,
+  deleteEducation,
+}: {
+  education: Education[];
+  deleteEducation: (arg0: string) => void;
+}): JSX.Element => {
   const educations = education.map((edu: Education) => (
     <tr key={edu._id}>
       <td>{edu.school}</td>
@@ -14,10 +21,7 @@ const Education = ({education}: {education: Education[]}): JSX.Element => {
         {edu.to === null ? "Now" : <Moment format="YYYY/MM/DD">{edu.to}</Moment>}
       </td>
       <td>
-        <button
-          // onClick={() => deleteEducation(exp._id)}
-          className="btn btn-danger"
-        >
+        <button onClick={() => deleteEducation(edu._id)} className="btn btn-danger">
           Delete
         </button>
       </td>
@@ -44,7 +48,7 @@ const Education = ({education}: {education: Education[]}): JSX.Element => {
 
 Education.propTypes = {
   education: PropTypes.array.isRequired,
-  // deleteEducation: PropTypes.func.isRequired,
+  deleteEducation: PropTypes.func.isRequired,
 };
 
-export default Education;
+export default connect(null, {deleteEducation})(Education);
