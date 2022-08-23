@@ -29,3 +29,19 @@ interface Alert {
   id: string;
   msg: string;
 }
+
+interface Experience {
+  _id: string;
+  company: string;
+  title: string;
+  from: Date;
+  to: Date;
+}
+
+interface Education {
+  _id: string;
+  school: string;
+  degree: string;
+  from: Date;
+  to: Date;
+}
