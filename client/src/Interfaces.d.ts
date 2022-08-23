@@ -45,3 +45,11 @@ interface Education {
   from: Date;
   to: Date;
 }
+
+interface Profile {
+  user: {_id: string; name: string; avatar: string};
+  status: string;
+  company: string;
+  location: string;
+  skills: string[];
+}
