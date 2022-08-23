@@ -35,8 +35,13 @@ const CreateProfile = ({
   const {company, website, location, status, skills, githubusername, bio, twitter, facebook, linkedin, youtube, instagram} =
     formData;
 
-  const onChange = (event: {target: {name: string; value: string}}) =>
-    setFormData({...formData, [event.target.name]: event.target.value});
+  const onChange = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
+    setFormData({
+      ...formData,
+      [(event.target as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement).name]: (
+        event.target as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+      ).value,
+    });
 
   const onSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault();
