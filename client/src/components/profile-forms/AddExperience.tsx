@@ -1,5 +1,5 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {History} from "history";
@@ -111,4 +111,4 @@ AddExperience.propTypes = {
   addExperience: PropTypes.func.isRequired,
 };
 
-export default connect(null, {addExperience})(AddExperience);
+export default connect(null, {addExperience})(withRouter(AddExperience as React.FC<any>));
