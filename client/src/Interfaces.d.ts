@@ -36,6 +36,8 @@ interface Experience {
   title: string;
   from: Date;
   to: Date;
+  location?: string;
+  description?: string;
 }
 
 interface Education {
@@ -44,6 +46,8 @@ interface Education {
   degree: string;
   from: Date;
   to: Date;
+  fieldOfStudy?: string;
+  description?: string;
 }
 
 interface Profile {
@@ -52,4 +56,17 @@ interface Profile {
   company: string;
   location: string;
   skills: string[];
+  website?: string;
+  social?: string[];
+  bio?: string;
+}
+
+interface Repo {
+  description: string;
+  name: string;
+  id: string;
+  html_url: string;
+  stargazers_count: number;
+  watchers_count: number;
+  forks_count: number;
 }
