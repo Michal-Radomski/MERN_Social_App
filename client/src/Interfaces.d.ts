@@ -73,4 +73,11 @@ interface Repo {
 
 interface Post {
   _id: string;
+  text: string;
+  name: string;
+  avatar: string;
+  user: string;
+  likes: string[];
+  comments: string[];
+  date: Date;
 }

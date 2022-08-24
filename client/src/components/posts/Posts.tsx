@@ -24,13 +24,18 @@ const Posts = ({
       <p className="lead">
         <i className="fas fa-user" /> Welcome to the community
       </p>
-      <Spinner />
-      {/* <PostForm /> */}
-      {/* <div className="posts">
+      {loading ? (
+        <Spinner />
+      ) : (
+        <React.Fragment>
+          {/* <PostForm /> */}
+          {/* <div className="posts">
         {posts.map((post) => (
           <PostItem key={post._id} post={post} />
         ))}
       </div> */}
+        </React.Fragment>
+      )}
     </section>
   );
 };
