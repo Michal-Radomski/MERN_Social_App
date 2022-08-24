@@ -1,4 +1,4 @@
-import {DELETE_POST, GET_POSTS, POST_ERROR, UPDATE_LIKES} from "../types";
+import {ADD_POST, DELETE_POST, GET_POSTS, POST_ERROR, UPDATE_LIKES} from "../types";
 
 const initialState: State = {
   posts: [],
@@ -34,6 +34,12 @@ const postReducer = (state = initialState, action: Dispatch) => {
       return {
         ...state,
         posts: state.posts.filter((post: {_id: string}) => post._id !== payload),
+        loading: false,
+      };
+    case ADD_POST:
+      return {
+        ...state,
+        posts: [payload, ...state.posts],
         loading: false,
       };
 
