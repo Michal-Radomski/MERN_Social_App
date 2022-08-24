@@ -4,10 +4,16 @@ import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import Moment from "react-moment";
 
+import {addLike, removeLike} from "../../redux/actions/post";
+
 const PostItem = ({
+  addLike,
+  removeLike,
   auth,
   post: {_id, text, name, avatar, user, likes, comments, date},
 }: {
+  addLike: (arg0: string) => void;
+  removeLike: (arg0: string) => void;
   auth: State;
   post: Post;
 }): JSX.Element => (
@@ -26,18 +32,10 @@ const PostItem = ({
 
       {/* {showActions && ( */}
       <React.Fragment>
-        <button
-          // onClick={() => addLike(_id)}
-          type="button"
-          className="btn btn-light"
-        >
+        <button onClick={() => addLike(_id)} type="button" className="btn btn-light">
           <i className="fas fa-thumbs-up" /> <span>{likes.length > 0 && <span>{likes.length}</span>}</span>
         </button>
-        <button
-          // onClick={() => removeLike(_id)}
-          type="button"
-          className="btn btn-light"
-        >
+        <button onClick={() => removeLike(_id)} type="button" className="btn btn-light">
           <i className="fas fa-thumbs-down" />
         </button>
         <Link to={`/posts/${_id}`} className="btn btn-primary">
@@ -71,4 +69,4 @@ const mapStateToProps = (state: State) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, {})(PostItem as React.FC<any>);
+export default connect(mapStateToProps, {addLike, removeLike})(PostItem as React.FC<any>);
