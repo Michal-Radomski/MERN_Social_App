@@ -70,3 +70,7 @@ interface Repo {
   watchers_count: number;
   forks_count: number;
 }
+
+interface Post {
+  _id: string;
+}

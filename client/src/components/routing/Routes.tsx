@@ -6,6 +6,7 @@ import Register from "../auth/Register";
 import Dashboard from "../dashboard/Dashboard";
 import Alert from "../layout/Alert";
 import NotFound from "../layout/NotFound";
+import Posts from "../posts/Posts";
 import AddEducation from "../profile-forms/AddEducation";
 import AddExperience from "../profile-forms/AddExperience";
 import CreateProfile from "../profile-forms/CreateProfile";
@@ -29,6 +30,7 @@ const Routes = (): JSX.Element => {
           <PrivateRoute exact={true} path="/edit-profile" component={EditProfile} />
           <PrivateRoute exact={true} path="/add-experience" component={AddExperience} />
           <PrivateRoute exact={true} path="/add-education" component={AddEducation} />
+          <PrivateRoute exact={true} path="/posts" component={Posts} />
           <Route path="/*" component={NotFound} />
         </Switch>
       </section>
