@@ -16,7 +16,7 @@ const Posts = ({
 }): JSX.Element => {
   React.useEffect(() => {
     getPosts();
-  }, [getPosts]);
+  }, [getPosts, posts]);
 
   return (
     <section className="container">

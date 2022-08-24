@@ -4,14 +4,16 @@ import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import Moment from "react-moment";
 
-import {addLike, removeLike} from "../../redux/actions/post";
+import {addLike, removeLike, deletePost} from "../../redux/actions/post";
 
 const PostItem = ({
+  deletePost,
   addLike,
   removeLike,
   auth,
   post: {_id, text, name, avatar, user, likes, comments, date},
 }: {
+  deletePost: (arg0: string) => void;
   addLike: (arg0: string) => void;
   removeLike: (arg0: string) => void;
   auth: State;
@@ -42,11 +44,7 @@ const PostItem = ({
           Discussion {comments.length > 0 && <span className="comment-count">{comments.length}</span>}
         </Link>
         {!auth.loading && user === auth.user._id && (
-          <button
-            // onClick={() => deletePost(_id)}
-            type="button"
-            className="btn btn-danger"
-          >
+          <button onClick={() => deletePost(_id)} type="button" className="btn btn-danger">
             <i className="fas fa-times" />
           </button>
         )}
@@ -63,10 +61,13 @@ PostItem.defaultProps = {
 PostItem.propTypes = {
   post: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
+  addLike: PropTypes.func.isRequired,
+  removeLike: PropTypes.func.isRequired,
+  deletePost: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state: State) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, {addLike, removeLike})(PostItem as React.FC<any>);
+export default connect(mapStateToProps, {addLike, removeLike, deletePost})(PostItem as React.FC<any>);
