@@ -57,6 +57,7 @@ router.get("/", auth, async (_req: Request, res: Response) => {
 router.get("/:id", auth, async (req: CustomRequest, res: Response) => {
   try {
     const post = await Post.findById(req.params.id);
+    // console.log(req.params.id);
 
     if (!post) {
       return res.status(404).json({msg: "Post not found"});
@@ -79,7 +80,7 @@ router.get("/:id", auth, async (req: CustomRequest, res: Response) => {
 router.delete("/:id", auth, async (req: CustomRequest, res: Response) => {
   try {
     const post = await Post.findById(req.params.id);
-
+    // console.log(req.params.id);
     if (!post) {
       return res.status(404).json({msg: "Post not found"});
     }

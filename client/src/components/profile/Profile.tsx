@@ -14,13 +14,13 @@ import {getProfileById} from "../../redux/actions/profile";
 const Profile = ({
   getProfileById,
   profile: {profile, loading},
+  // match,
   auth,
-}: // match,
-{
+}: {
   getProfileById: (arg0: string) => void;
   profile: {profile: State; loading: boolean};
-  auth: State;
   // match: State;
+  auth: State;
 }): JSX.Element => {
   const {id}: {id: string} = useParams();
   React.useEffect(() => {

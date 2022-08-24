@@ -72,7 +72,7 @@ interface Repo {
 }
 
 interface Post {
-  _id: string;
+  _id: ObjectId | string;
   text: string;
   name: string;
   avatar: string;
