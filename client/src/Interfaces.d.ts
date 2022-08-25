@@ -78,6 +78,15 @@ interface Post {
   avatar: string;
   user: string;
   likes: string[];
-  comments: string[];
+  comments: {_id: string}[];
+  date: Date;
+}
+
+interface Comment {
+  _id: ObjectId | string;
+  text: string;
+  name: string;
+  avatar: string;
+  user: User;
   date: Date;
 }

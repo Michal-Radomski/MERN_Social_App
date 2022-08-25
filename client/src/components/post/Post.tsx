@@ -1,12 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {Link, useParams, useLocation, withRouter} from "react-router-dom";
+import {Link, useLocation, withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 
 import Spinner from "../layout/Spinner";
 import PostItem from "../posts/PostItem";
 import CommentForm from "../post/CommentForm";
-// import CommentItem from '../post/CommentItem';
+import CommentItem from "./CommentItem";
 import {getPost} from "../../redux/actions/post";
 
 const Post = ({
@@ -16,9 +16,6 @@ const Post = ({
   getPost: (arg0: string) => void;
   post: {post: Post; loading: boolean};
 }): JSX.Element => {
-  // const {id}: {id: string} = useParams();
-  // console.log({id});
-
   const location = useLocation();
   const ID_loc = location.pathname.substring(7);
   // console.log("ID_loc:", ID_loc);
@@ -36,11 +33,11 @@ const Post = ({
       </Link>
       <PostItem post={post} showActions={false} />
       <CommentForm postId={post._id} />
-      {/* <div className="comments">
+      <div className="comments">
         {post.comments.map((comment) => (
           <CommentItem key={comment._id} comment={comment} postId={post._id} />
         ))}
-      </div> */}
+      </div>
     </section>
   );
 };
