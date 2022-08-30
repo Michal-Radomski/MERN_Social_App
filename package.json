@@ -2,12 +2,12 @@
   "name": "16-mern_social_app",
   "version": "1.0.0",
   "description": "Files created during the Udemy.com course: <https://www.udemy.com/course/mern-stack-front-to-back>",
-  "main": "index.ts",
   "scripts": {
     "start": "clear && ts-node server.ts",
     "server": "clear && nodemon server.ts",
     "client": "BROWSER=NONE npm start --prefix client",
-    "dev": "clear && concurrently \"npm run server\" \"npm run client\""
+    "dev": "clear && concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "repository": {
     "type": "git",
